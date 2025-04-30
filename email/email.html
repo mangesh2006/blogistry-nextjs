@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OTP Verification</title>
+  </head>
+  <body
+    style="
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      height: 100vh;
+      display: flex;
+    "
+  >
+    <table role="presentation" cellpadding="0" cellspacing="0" width="100%">
+      <tr>
+        <td align="center">
+          <div
+            style="
+              background-color: #ffffff;
+              width: 100%;
+              max-width: 600px;
+              margin: 0 auto;
+              padding: 20px;
+              border-radius: 8px;
+            "
+          >
+            <!-- Header -->
+            <div
+              style="
+                background-color: #007bff;
+                color: #ffffff;
+                text-align: center;
+                padding: 20px;
+                border-radius: 6px 6px 0 0;
+              "
+            >
+              <h1 style="font-size: 28px; margin: 0">OTP Verification</h1>
+            </div>
+
+            <!-- Content -->
+            <div style="padding: 20px; color: #333333">
+              <h2 style="font-size: 22px; color: #333333; margin-top: 0">
+                Hi there!
+              </h2>
+              <p style="font-size: 16px; line-height: 1.5">
+                We received a request to verify your email address. To complete
+                the process, please use the OTP below:
+              </p>
+              <div
+                style="
+                  background-color: #f1f1f1;
+                  padding: 20px;
+                  border-radius: 6px;
+                  text-align: center;
+                  font-size: 24px;
+                  font-weight: bold;
+                  color: #007bff;
+                "
+              >
+                {{code}}
+              </div>
+              <p style="font-size: 16px; line-height: 1.5">
+                This OTP is valid for 5 minutes. If you didn’t request this,
+                please ignore this email.
+              </p>
+            </div>
+
+            <!-- Footer -->
+            <div
+              style="
+                text-align: center;
+                padding: 20px;
+                background-color: #f1f1f1;
+                color: #666666;
+                font-size: 14px;
+              "
+            >
+              <p style="margin: 0">
+                If you have any questions, please contact us at
+                <a href="mailto:support@example.com" style="color: #007bff"
+                  >support@example.com</a
+                >.
+              </p>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
