@@ -33,7 +33,6 @@ const BlogContent = ({ content }: { content: string }) => {
         if (language && lowlight) {
           const highlighted = lowlight.highlight(language, blockElement.innerText);
 
-          // ✅ Convert HAST to raw HTML string
           const html = toHtml(highlighted);
 
           blockElement.innerHTML = html;

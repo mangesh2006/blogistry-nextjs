@@ -4,6 +4,13 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
+// Define the blog structure
+interface Blog {
+  _id: string;
+  title: string;
+  content: string;
+}
+
 function stripHtml(html: string): string {
   if (typeof window === "undefined") return html;
   const doc = new DOMParser().parseFromString(html, "text/html");
@@ -11,7 +18,7 @@ function stripHtml(html: string): string {
 }
 
 const ExplorePage = () => {
-  const [blogs, setBlogs] = useState<[]>([]);
+  const [blogs, setBlogs] = useState<Blog[]>([]); // Specify Blog[] type
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,7 +26,7 @@ const ExplorePage = () => {
       try {
         const res = await fetch("/api/explore");
         const data = await res.json();
-        setBlogs(data.message);
+        setBlogs(data.message); // assuming 'message' is an array of blog objects
       } catch (error) {
         console.error("Error fetching blogs:", error);
       } finally {
@@ -58,12 +65,9 @@ const ExplorePage = () => {
                     <h3 className="text-xl font-semibold mb-2 line-clamp-2 text-gray-100">
                       {blog.title}
                     </h3>
-                    <div
-                      className="text-gray-300 text-sm line-clamp-4"
-                      dangerouslySetInnerHTML={{
-                        __html: stripHtml(blog.content),
-                      }}
-                    ></div>
+                    <div className="text-gray-300 text-sm line-clamp-4">
+                      {stripHtml(blog.content)} {/* Render stripped HTML here */}
+                    </div>
                   </div>
                 </motion.div>
               </Link>

@@ -1,10 +1,4 @@
-import mongoose, { Mongoose } from "mongoose";
-
-// Type for the cached variable
-interface Cached {
-  conn: Mongoose | null;
-  promise: Promise<Mongoose> | null;
-}
+import mongoose from 'mongoose';
 
 const MONGO_URI = process.env.MONGO_URI as string;
 
@@ -14,25 +8,26 @@ if (!MONGO_URI) {
   );
 }
 
-// Type the global object properly instead of using 'any'
-declare global {
-  var mongoose: Cached | undefined;
+// Use globalThis directly without var
+interface Cached {
+  conn: mongoose.Connection | null;
+  promise: Promise<mongoose.Mongoose> | null;
 }
 
-const cached: Cached = global.mongoose || { conn: null, promise: null };
+const cached: Cached = globalThis.mongoose || { conn: null, promise: null };
 
 async function connectDB() {
   if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGO_URI).then((mongooseInstance) => {
-      return mongooseInstance;
+    cached.promise = mongoose.connect(MONGO_URI).then((mongoose) => {
+      return mongoose;
     });
   }
   cached.conn = await cached.promise;
   return cached.conn;
 }
 
-global.mongoose = cached;
+globalThis.mongoose = cached;
 
 export default connectDB;
