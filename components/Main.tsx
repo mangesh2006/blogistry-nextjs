@@ -33,7 +33,7 @@ const Main = () => {
           </h2>
           <p className="text-gray-600 dark:text-gray-300 text-md md:text-lg leading-relaxed">
             Blogistry is a platform designed for creators who want to make an
-            impact through their words. Whether you're sharing personal stories,
+            impact through their words. Whether you&apos;re sharing personal stories,
             expert advice, or creative ideas — Blogistry makes it easy,
             beautiful, and powerful. Express yourself freely and build your
             audience today!
