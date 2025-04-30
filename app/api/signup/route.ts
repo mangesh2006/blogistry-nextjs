@@ -4,7 +4,6 @@ import bcrypt from "bcrypt";
 import GenerateOtp from "@/app/api/utils/GenerateOtp";
 import SendMail from "@/app/api/utils/SendMailTransporter";
 import Otp from "@/Models/OtpSchema";
-import { Code } from "lucide-react";
 
 await connectDB();
 

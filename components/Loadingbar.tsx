@@ -2,22 +2,20 @@
 
 import { useState, useEffect } from "react";
 import LoadingBar from "react-top-loading-bar";
-import { usePathname } from "next/navigation"; // Import from next/navigation
+import { usePathname } from "next/navigation"; 
 
 const ProgressBar = () => {
   const [progress, setProgress] = useState(0);
-  const pathname = usePathname(); // Tracks the current route
+  const pathname = usePathname(); 
 
-  // Use useEffect to update progress bar when route changes
   useEffect(() => {
-    setProgress(30); // Initial progress when starting a route change
-    setTimeout(() => setProgress(100), 1000); // Complete progress after 1 second
+    setProgress(30); 
+    setTimeout(() => setProgress(100), 1000); 
 
-    // Reset progress after the page load
     return () => {
       setProgress(0);
     };
-  }, [pathname]); // Only re-run when the pathname changes
+  }, [pathname]); 
 
   return (
     <LoadingBar

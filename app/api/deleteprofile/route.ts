@@ -1,6 +1,5 @@
 import connectDB from "@/lib/db";
 import User from "@/Models/UserSchema";
-import { NextApiRequest } from "next";
 
 connectDB();
 

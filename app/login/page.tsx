@@ -1,5 +1,4 @@
 import Login from "@/components/Login";
-import Head from "next/head";
 import React from "react";
 import { Metadata } from "next";
 
