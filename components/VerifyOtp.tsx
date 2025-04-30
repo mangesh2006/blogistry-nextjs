@@ -81,7 +81,7 @@ const VerifyOtp = () => {
         </form>
 
         <p className="text-center text-sm text-gray-400">
-          Didn't receive the OTP?{" "}
+          Didn&apos;t receive the OTP?
           <button
             onClick={() => toast.info("Resend OTP functionality is here.")}
             className="text-blue-500 hover:underline"

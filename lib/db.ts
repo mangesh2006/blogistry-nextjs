@@ -8,7 +8,7 @@ if (!MONGO_URI) {
   );
 }
 
-let cached = (global as any).mongoose || { conn: null, promise: null };
+const cached = (global as any).mongoose || { conn: null, promise: null };
 
 async function connectDB() {
   if (cached.conn) return cached.conn;

@@ -42,7 +42,7 @@ const WelcomeNavbar = () => {
         toast.error(data.message || "Something went wrong!");
       }
     } catch (error) {
-      toast.error("An error occurred during logout");
+      toast.error("An error occurred during logout" + error);
     }
   };
 
