@@ -1,8 +1,5 @@
-import tailwindcss from "tailwindcss";
-
-/** @type {import('postcss').ProcessOptions} */
 const config = {
-  plugins: [tailwindcss],
+  plugins: ["postcss/tailwindcss"],
 };
 
 export default config;
