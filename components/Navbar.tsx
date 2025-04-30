@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { useTheme } from "next-themes";
 import { ModeToggle } from "./Theme";
@@ -12,7 +12,6 @@ import {
 } from "./ui/sheet";
 
 const Navbar = () => {
-  const { theme, setTheme } = useTheme();
   return (
     <>
       <nav className="border-b bg-white/70 dark:bg-gray-900/20 dark:border-gray-700 backdrop-blur-sm z-10 sticky top-0">
