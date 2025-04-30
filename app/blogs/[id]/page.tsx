@@ -1,26 +1,22 @@
-import connectDB from "@/lib/db";
-import Blog from "@/Models/BlogSchema";
-import { notFound } from "next/navigation";
-import DOMPurify from "isomorphic-dompurify";
-import { format } from "date-fns";
 import BlogContent from "@/components/BlogContent";
-import { Metadata } from "next";
+import connectDB from "@/lib/db";
+import { notFound } from "next/navigation";
+import { type FC } from "react";
+import DOMPurify from "isomorphic-dompurify";
+import Blog from "@/Models/BlogSchema";
+import { format } from "date-fns";
 
 interface PageProps {
-  params: {
-    id: string;
-  };
+  params: { id: string };
 }
 
-export default async function BlogPage({ params }: PageProps) {
+const BlogPage: FC<PageProps> = async ({ params }) => {
   await connectDB();
 
   const blog = await Blog.findById(params.id);
-
   if (!blog) return notFound();
 
   const sanitizedContent = DOMPurify.sanitize(blog.content);
-
   const formattedDate = blog.createdAt
     ? format(new Date(blog.createdAt), "MMMM d, yyyy")
     : null;
@@ -51,18 +47,6 @@ export default async function BlogPage({ params }: PageProps) {
       </div>
     </main>
   );
-}
-
-export async function generateStaticParams(): Promise<{ id: string }[]> {
-  await connectDB();
-  const blogs = await Blog.find({}, "_id");
-
-  return blogs.map((blog: { _id: any }) => ({
-    id: blog._id.toString(),
-  }));
-}
-
-export const metadata: Metadata = {
-  title: "Blog",
-  description: "This is a blog page",
 };
+
+export default BlogPage;
