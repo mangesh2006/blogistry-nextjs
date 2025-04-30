@@ -43,6 +43,7 @@
     "mongoose": "^8.14.0",
     "multer": "^1.4.5-lts.2",
     "next": "15.3.1",
+    "next-sitemap": "^4.2.3",
     "next-themes": "^0.4.6",
     "nodemailer": "^6.10.1",
     "react": "^19.0.0",
