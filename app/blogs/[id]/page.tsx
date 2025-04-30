@@ -6,30 +6,9 @@ import { format } from "date-fns";
 import BlogContent from "@/components/BlogContent";
 import { Metadata } from "next";
 
-type PageProps = {
-  params: { id: string };
-};
-
-export async function generateStaticParams() {
-  await connectDB();
-  const blogs = await Blog.find().select("_id");
-
-  return blogs.map((blog: any) => ({
-    id: blog._id.toString(),
-  }));
-}
-
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
-  await connectDB();
-  const blog = await Blog.findById(params.id);
-
-  if (!blog) return { title: "Blog Not Found" };
-
-  return {
-    title: blog.title,
-    description: blog.content.slice(0, 150),
+interface PageProps {
+  params: {
+    id: string;
   };
 }
 
@@ -37,9 +16,11 @@ export default async function BlogPage({ params }: PageProps) {
   await connectDB();
 
   const blog = await Blog.findById(params.id);
+
   if (!blog) return notFound();
 
   const sanitizedContent = DOMPurify.sanitize(blog.content);
+
   const formattedDate = blog.createdAt
     ? format(new Date(blog.createdAt), "MMMM d, yyyy")
     : null;
@@ -71,3 +52,17 @@ export default async function BlogPage({ params }: PageProps) {
     </main>
   );
 }
+
+export async function generateStaticParams() {
+  await connectDB();
+  const blogs = await Blog.find({}, "_id");
+
+  return blogs.map((blog: { _id: any }) => ({
+    id: blog._id.toString(),
+  }));
+}
+
+export const metadata: Metadata = {
+  title: "Blog",
+  description: "This is a blog page",
+};
