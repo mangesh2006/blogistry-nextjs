@@ -12,11 +12,13 @@ const WelcomeNavbar = () => {
   const router = useRouter();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      router.replace("/login");
-    } else {
-      setToken(token);
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        router.replace("/login");
+      } else {
+        setToken(token);
+      }
     }
   }, [router]);
 
@@ -35,7 +37,9 @@ const WelcomeNavbar = () => {
       const data = await res.json();
 
       if (res.status === 200) {
-        localStorage.removeItem("token"); 
+        if (typeof window !== "undefined") {
+          localStorage.removeItem("token");
+        }
         toast.info(data.message || "Logged out successfully");
         router.push("/"); 
       } else {

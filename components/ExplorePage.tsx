@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-// Define the blog structure
 interface Blog {
   _id: string;
   title: string;

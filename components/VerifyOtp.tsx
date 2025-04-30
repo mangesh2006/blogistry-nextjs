@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Loader2, Key } from "lucide-react"; 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,13 @@ const VerifyOtp = () => {
   const router = useRouter();
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
-  const email = localStorage.getItem("VerifyEmail");
+  const [email, setemail] = useState("")
+
+  useEffect(() => {
+    const email = localStorage.getItem("VerifyEmail");
+    if(!email) return;
+    setemail(email)
+  },[])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

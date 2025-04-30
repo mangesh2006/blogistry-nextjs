@@ -1,5 +1,4 @@
-"use client";
-
+"use client"
 import { useEffect, useRef, useState } from "react";
 import { Lock } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -16,106 +15,110 @@ const ProfilePage = () => {
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("token");
 
-    if (!token) {
-      toast.error("User not logged in");
-      return;
-    }
-
-    const fetchData = async () => {
-      try {
-        const res = await fetch("/api/profile", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        const data = await res.json();
-
-        if (res.status === 200) {
-          setUsername(data.username);
-          setEmail(data.email);
-        } else {
-          toast.error(data.message || "Failed to fetch profile");
-        }
-      } catch (error) {
-        toast.error("Error fetching profile" + error);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const handleImageChange = async () => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      toast.error("User not logged in");
-      return;
-    }
-
-    if (inputRef.current?.files && inputRef.current.files[0]) {
-      if (!email) {
-        toast.error("Email not found. Cannot upload image.");
+      if (!token) {
+        toast.error("User not logged in");
         return;
       }
 
-      const formData = new FormData();
-      formData.append("file", inputRef.current.files[0]);
-      formData.append("token", token);
+      const fetchData = async () => {
+        try {
+          const res = await fetch("/api/profile", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          });
 
-      try {
-        const res = await fetch("/api/upload", {
-          method: "POST",
-          body: formData,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+          const data = await res.json();
 
-        const data = await res.json();
-
-        if (res.status === 200) {
-          setImgPath(data.imageUrl);
-          toast.success("Image uploaded successfully!");
-        } else {
-          toast.error("Failed to upload image.");
+          if (res.status === 200) {
+            setUsername(data.username);
+            setEmail(data.email);
+          } else {
+            toast.error(data.message || "Failed to fetch profile");
+          }
+        } catch (error) {
+          toast.error("Error fetching profile" + error);
         }
-      } catch (error) {
-        toast.error("Error uploading image." + error);
+      };
+
+      fetchData();
+    }
+  }, []);
+
+  const handleImageChange = async () => {
+    if (typeof window !== "undefined") {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        toast.error("User not logged in");
+        return;
+      }
+
+      if (inputRef.current?.files && inputRef.current.files[0]) {
+        if (!email) {
+          toast.error("Email not found. Cannot upload image.");
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append("file", inputRef.current.files[0]);
+        formData.append("token", token);
+
+        try {
+          const res = await fetch("/api/upload", {
+            method: "POST",
+            body: formData,
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          const data = await res.json();
+
+          if (res.status === 200) {
+            setImgPath(data.imageUrl);
+            toast.success("Image uploaded successfully!");
+          } else {
+            toast.error("Failed to upload image.");
+          }
+        } catch (error) {
+          toast.error("Error uploading image." + error);
+        }
       }
     }
   };
 
   useEffect(() => {
-    const fetchImage = async () => {
-      if (!email) return;
+    if (typeof window !== "undefined" && email) {
+      const fetchImage = async () => {
+        try {
+          const res = await fetch("/api/fetchimg", {
+            method: "POST",
+            body: JSON.stringify({ email }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
 
-      try {
-        const res = await fetch("/api/fetchimg", {
-          method: "POST",
-          body: JSON.stringify({ email }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+          const data = await res.json();
 
-        const data = await res.json();
-
-        if (res.status === 200) {
-          setImgPath(data.imgUrl);
-        } else {
-          toast.error(data.message || "Failed to fetch image");
+          if (res.status === 200) {
+            setImgPath(data.imgUrl);
+          } else {
+            toast.error(data.message || "Failed to fetch image");
+          }
+        } catch (error) {
+          toast.error("Error fetching image" + error);
         }
-      } catch (error) {
-        toast.error("Error fetching image" + error);
-      }
-    };
+      };
 
-    fetchImage();
+      fetchImage();
+    }
   }, [email]);
 
   return (

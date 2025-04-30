@@ -4,7 +4,7 @@ import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import {
   Loader2,
@@ -45,8 +45,15 @@ lowlight.register("php", php);
 const CreateBlog = () => {
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
-  const token = localStorage.getItem("token");
+  const [token, settoken] = useState("");
   const router = useRouter();
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    settoken(token);
+  }, []);
 
   const editor = useEditor({
     immediatelyRender: false,
