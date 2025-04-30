@@ -1,4 +1,5 @@
-import { useState } from "react";
+"use client"
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -12,14 +13,19 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 const DeleteDialouge = () => {
-  const token = localStorage.getItem("token");
+  const [token, settoken] = useState("")
   const router = useRouter();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  if(!token ){
-    console.log("Token not found")
-    return;
-  }
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if(!token ){
+      console.log("Token not found")
+      return;
+    }
+
+    settoken(token)
+  })
 
   const handleDelete = async () => {
     const res = await fetch(`/api/deleteprofile`, {

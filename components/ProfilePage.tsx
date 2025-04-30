@@ -8,6 +8,8 @@ import EditDialouge from "./EditDialouge";
 import DeleteDialouge from "./DeleteDialouge";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 const ProfilePage = () => {
   const [email, setEmail] = useState<string | null>(null);
   const [username, setUsername] = useState<string>("");

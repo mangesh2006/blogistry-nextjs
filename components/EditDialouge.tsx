@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -22,11 +23,17 @@ const EditDialouge: React.FC<EditDialougeProps> = ({
 }) => {
   const [newUsername, setNewUsername] = useState(username);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const token = localStorage.getItem("token");
+  const [token, settoken] = useState("");
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewUsername(e.target.value);
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+    settoken(token);
+  });
 
   const handleSubmit = async () => {
     const res = await fetch("/api/edit", {
