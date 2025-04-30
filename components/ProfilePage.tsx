@@ -85,8 +85,10 @@ const ProfilePage = () => {
           if (res.status === 200) {
             setImgPath(data.imageUrl);
             toast.success("Image uploaded successfully!");
-          } else {
-            toast.error("Failed to upload image.");
+          } else if(res.status === 400){
+            toast.error(data.message);
+          }else if(res.status === 404){
+            toast.error(data.message)
           }
         } catch (error) {
           toast.error("Error uploading image." + error);
