@@ -6,13 +6,14 @@ import { format } from "date-fns";
 import BlogContent from "@/components/BlogContent";
 import { Metadata } from "next";
 
-export default async function BlogPage({ params }: { params: { id: string } }) {
+export default async function BlogPage({ params }: any) {
   await connectDB();
 
   const blog = await Blog.findById(params.id);
   if (!blog) return notFound();
 
   const sanitizedContent = DOMPurify.sanitize(blog.content);
+
   const formattedDate = blog.createdAt
     ? format(new Date(blog.createdAt), "MMMM d, yyyy")
     : null;
@@ -43,16 +44,8 @@ export default async function BlogPage({ params }: { params: { id: string } }) {
   );
 }
 
-export async function generateStaticParams() {
-  await connectDB();
-  const blogs = await Blog.find({}, "_id");
-
-  return blogs.map((blog: { _id: any }) => ({
-    id: blog._id.toString(),
-  }));
-}
-
 export const metadata: Metadata = {
   title: "Blog",
   description: "This is a blog page",
 };
+
