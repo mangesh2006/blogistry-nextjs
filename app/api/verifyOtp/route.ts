@@ -30,7 +30,7 @@ export async function POST(req: Request) {
     });
   }
 
-  const verify = await User.findOneAndUpdate(
+  await User.findOneAndUpdate(
     { email },
     { $set: { isVerified: true } }
   );

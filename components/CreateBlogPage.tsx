@@ -16,8 +16,6 @@ import {
   Heading3,
   ImageIcon,
   UnderlineIcon,
-  Code,
-  CodeSquareIcon,
 } from "lucide-react";
 import Placeholder from "@tiptap/extension-placeholder";
 import { Image } from "@tiptap/extension-image";

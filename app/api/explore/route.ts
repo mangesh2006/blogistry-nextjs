@@ -3,7 +3,7 @@ import Blog from "@/Models/BlogSchema";
 
 await connectDB();
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     const blogs = await Blog.find({}).sort({ createdAt: -1 }).limit(10);
 

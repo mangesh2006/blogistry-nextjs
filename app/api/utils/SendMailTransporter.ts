@@ -15,7 +15,7 @@ const SendMail = async (email: string, otp: string) => {
   let htmlcontent = fs.readFileSync(htmlPath, "utf8");
 
   htmlcontent = htmlcontent.replace("{{code}}", otp);
-  const info = await transport.sendMail({
+  await transport.sendMail({
     from: `"noreply" <${process.env.USER_EMAIL}>`,
     to: email,
     subject: "Verify Email",

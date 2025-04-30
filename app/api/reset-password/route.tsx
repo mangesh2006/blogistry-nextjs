@@ -34,5 +34,6 @@ export async function POST(req: Request) {
     return new Response(JSON.stringify({ message: "Server error" }), {
       status: 500,
     });
+    console.log(error)
   }
 }

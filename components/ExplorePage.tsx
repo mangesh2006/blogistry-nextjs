@@ -11,7 +11,7 @@ function stripHtml(html: string): string {
 }
 
 const ExplorePage = () => {
-  const [blogs, setBlogs] = useState<any[]>([]);
+  const [blogs, setBlogs] = useState<[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
