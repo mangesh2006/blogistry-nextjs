@@ -42,7 +42,7 @@ const ProfilePage = () => {
           toast.error(data.message || "Failed to fetch profile");
         }
       } catch (error) {
-        toast.error("Error fetching profile");
+        toast.error("Error fetching profile" + error);
       }
     };
 
@@ -85,7 +85,7 @@ const ProfilePage = () => {
           toast.error("Failed to upload image.");
         }
       } catch (error) {
-        toast.error("Error uploading image.");
+        toast.error("Error uploading image." + error);
       }
     }
   };
@@ -111,7 +111,7 @@ const ProfilePage = () => {
           toast.error(data.message || "Failed to fetch image");
         }
       } catch (error) {
-        toast.error("Error fetching image");
+        toast.error("Error fetching image" + error);
       }
     };
 
