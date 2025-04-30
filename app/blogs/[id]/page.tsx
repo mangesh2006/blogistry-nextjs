@@ -53,7 +53,7 @@ export default async function BlogPage({ params }: PageProps) {
   );
 }
 
-export async function generateStaticParams() {
+export async function generateStaticParams(): Promise<{ id: string }[]> {
   await connectDB();
   const blogs = await Blog.find({}, "_id");
 
