@@ -8,10 +8,13 @@ if (!MONGO_URI) {
   );
 }
 
-// Use globalThis directly without var
 interface Cached {
   conn: mongoose.Connection | null;
   promise: Promise<mongoose.Mongoose> | null;
+}
+
+declare global {
+  var mongoose: Cached | undefined;
 }
 
 const cached: Cached = globalThis.mongoose || { conn: null, promise: null };
@@ -24,7 +27,8 @@ async function connectDB() {
       return mongoose;
     });
   }
-  cached.conn = await cached.promise;
+  const mongooseInstance = await cached.promise;
+  cached.conn = mongooseInstance.connection;
   return cached.conn;
 }
 
