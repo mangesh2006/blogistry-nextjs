@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Loader2, Key } from "lucide-react"; 
+import { Loader2, Key } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
@@ -11,13 +11,35 @@ const VerifyOtp = () => {
   const router = useRouter();
   const [otp, setOtp] = useState("");
   const [loading, setLoading] = useState(false);
-  const [email, setemail] = useState("")
+  const [email, setemail] = useState("");
 
   useEffect(() => {
     const email = localStorage.getItem("VerifyEmail");
-    if(!email) return;
-    setemail(email)
-  },[])
+    if (!email) return;
+    setemail(email);
+  }, []);
+
+  const handleResend = async () => {
+    const res = await fetch("/api/resend-otp", {
+      method: "POST",
+      body: JSON.stringify({ email }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await res.json();
+
+    if (res.status === 200) {
+      toast.success(data.message);
+    } else if (res.status === 404) {
+      toast.error(data.message);
+    } else if (res.status === 500) {
+      toast.error(data.message);
+    }else if(res.status === 400){
+      toast.error(data.message)
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -87,9 +109,9 @@ const VerifyOtp = () => {
         </form>
 
         <p className="text-center text-sm text-gray-400">
-          Didn&apos;t receive the OTP?
+          Didn&apos;t receive the OTP?{" "}
           <button
-            onClick={() => toast.info("Resend OTP functionality is here.")}
+            onClick={handleResend}
             className="text-blue-500 hover:underline"
           >
             Resend OTP
