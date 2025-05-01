@@ -31,6 +31,7 @@ import c from "highlight.js/lib/languages/c";
 import java from "highlight.js/lib/languages/java";
 import css from "highlight.js/lib/languages/css";
 import php from "highlight.js/lib/languages/php";
+import AI from "./AI";
 
 const lowlight = createLowlight();
 
@@ -232,6 +233,8 @@ const CreateBlog = () => {
           >
             <ImageIcon />
           </Button>
+
+          <AI/>
 
           <input
             type="file"
