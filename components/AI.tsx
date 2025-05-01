@@ -97,7 +97,7 @@ export default function AI() {
               />
               <Button
                 onClick={handleSend}
-                className="hover:bg-accent border p-2"
+                className="hover:bg-accent-foreground border p-2"
               >
                 <Send />
               </Button>
