@@ -126,7 +126,7 @@ const CreateBlog = () => {
       />
       {/* Toolbar */}
       {editor && (
-        <div className="flex gap-2 mb-2">
+        <div className="flex gap-2 mb-2 overflow-x-auto">
           <Button
             size="sm"
             variant="ghost"
