@@ -57,7 +57,7 @@ export default function AI() {
         </SheetTrigger>
         <SheetContent
           side="right"
-          className="w-full sm:w-[500px] md:w-[700px] max-w-none"
+          className="w-full sm:w-[500px] md:w-[700px] max-w-none overflow-y-auto"
         >
           <SheetTitle className="mx-3.5 text-2xl font-bold">
             AI Agent
