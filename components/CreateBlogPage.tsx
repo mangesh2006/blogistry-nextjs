@@ -16,6 +16,8 @@ import {
   Heading3,
   ImageIcon,
   UnderlineIcon,
+  Check,
+  X,
 } from "lucide-react";
 import Placeholder from "@tiptap/extension-placeholder";
 import { Image } from "@tiptap/extension-image";
@@ -47,6 +49,8 @@ const CreateBlog = () => {
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(false);
   const [token, settoken] = useState("");
+  const [error, seterror] = useState("");
+  const [message, setmessage] = useState("");
   const router = useRouter();
 
   useEffect(() => {
@@ -55,6 +59,38 @@ const CreateBlog = () => {
 
     settoken(token);
   }, []);
+
+  useEffect(() => {
+    if (!title) {
+      seterror("");
+      setmessage("");
+      return;
+    }
+
+    const delay = setTimeout(async () => {
+      const res = await fetch("/api/fetchTitle", {
+        method: "POST",
+        body: JSON.stringify({ title }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await res.json();
+
+      if (res.status === 200) {
+        seterror(data.message);
+        setmessage("");
+      } else if (res.status === 404) {
+        seterror("");
+        setmessage(data.message);
+      } else {
+        toast.error(data.message || "Something went wrong.");
+      }
+    }, 500);
+
+    return () => clearTimeout(delay);
+  }, [title]);
 
   const editor = useEditor({
     immediatelyRender: false,
@@ -88,6 +124,11 @@ const CreateBlog = () => {
       return;
     }
 
+    if (error) {
+      toast.error("Title already taken");
+      return;
+    }
+
     setLoading(true);
     const res = await fetch("/api/create-blog", {
       method: "POST",
@@ -105,7 +146,6 @@ const CreateBlog = () => {
     if (res.status === 200) {
       toast.success("Blog created successfully!");
       setTitle("");
-      editor.commands.setContent("<p>Start writing your blog...</p>");
       router.push("/welcome");
     } else if (res.status === 404) {
       toast.error(data.message || "Something went wrong.");
@@ -124,6 +164,16 @@ const CreateBlog = () => {
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
+      {error ? (
+        <p className="text-red-600 text-sm flex items-center gap-1">
+          <X size={16} /> {error}
+        </p>
+      ) : (
+        <p className="text-green-700 text-sm flex items-center gap-1">
+          <Check size={16} />
+          {message}
+        </p>
+      )}
       {/* Toolbar */}
       {editor && (
         <div className="flex gap-2 mb-2 overflow-x-auto">
@@ -234,7 +284,7 @@ const CreateBlog = () => {
             <ImageIcon />
           </Button>
 
-          <AI/>
+          <AI />
 
           <input
             type="file"

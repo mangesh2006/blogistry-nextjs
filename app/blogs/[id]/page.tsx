@@ -5,6 +5,9 @@ import DOMPurify from "isomorphic-dompurify";
 import { format } from "date-fns";
 import BlogContent from "@/components/BlogContent";
 import { Metadata } from "next";
+import { Button } from "@/components/ui/button";
+import { PencilLine } from "lucide-react";
+import DeleteBlog from "@/components/DeleteBlog";
 
 export default async function BlogPage({ params }: any) {
   await connectDB();
@@ -34,6 +37,9 @@ export default async function BlogPage({ params }: any) {
             {formattedDate && (
               <span className="text-sm md:text-base">{formattedDate}</span>
             )}
+            <span className="mx-2 flex justify-center items-center">
+              <DeleteBlog title={blog.title} />
+            </span>
           </div>
         )}
         <div className="w-full max-w-4xl mx-auto">
@@ -48,4 +54,3 @@ export const metadata: Metadata = {
   title: "Blog",
   description: "This is a blog page",
 };
-

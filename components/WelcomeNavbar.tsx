@@ -72,14 +72,6 @@ const WelcomeNavbar = () => {
           </Link>
 
           <Link
-            href="/explore"
-            className="text-gray-300 hover:text-white dark:text-gray-400 dark:hover:text-white flex items-center gap-1"
-          >
-            <Compass size={18} />
-            <span className="hidden md:inline">Explore</span>
-          </Link>
-
-          <Link
             href="/profile"
             className="text-gray-300 hover:text-white dark:text-gray-400 dark:hover:text-white flex items-center gap-1"
           >
